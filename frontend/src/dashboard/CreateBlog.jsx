@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Upload, FileText, ListChecks, Image as ImageIcon } from "lucide-react";
+import { BACKEND_URL } from "../utils";
 
 function CreateBlog() {
   const [title, setTitle] = useState("");
@@ -108,7 +109,7 @@ function CreateBlog() {
       formData.append("about", about);
       formData.append("blogImage", blogImage);
 
-      await axios.post("http://localhost:2000/api/blogs/create", formData, {
+      await axios.post(`${BACKEND_URL}/api/blogs/create`, formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });

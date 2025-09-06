@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaFeatherAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { FaSun, FaMoon } from "react-icons/fa";
+import { BACKEND_URL } from "../utils";
 
 function Register() {
   const [name, setName] = useState("");
@@ -38,7 +39,7 @@ function Register() {
     formData.append("photo", photo);
     try {
       const { data } = await axios.post(
-        "http://localhost:2000/api/users/register",
+        `${BACKEND_URL}/api/users/register`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

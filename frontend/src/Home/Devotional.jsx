@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
-
+import { BACKEND_URL } from "../utils";
 function Devotional() {
   const { blogs } = useAuth();
   const devotionalBlogs = blogs?.filter((blog) => blog.category === "Devotional");

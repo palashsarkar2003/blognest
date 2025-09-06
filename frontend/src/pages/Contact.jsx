@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaCheckCircle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { BACKEND_URL } from "../utils";
 
 function Contact() {
   const [success, setSuccess] = useState(false); // modal state

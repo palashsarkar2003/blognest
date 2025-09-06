@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import { Mail, Phone, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
+import { BACKEND_URL } from "../utils";
 
 function MyProfile() {
   const { profile } = useAuth();

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaGithub, FaLinkedin, FaYoutube, FaArrowUp, FaFeatherAlt } from "react-icons/fa";
 
+
 const Footer = () => {
   const [showScroll, setShowScroll] = useState(false);
 

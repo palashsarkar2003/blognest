@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthProvider";
 import { FaFeatherAlt } from "react-icons/fa";
 import { BsSun, BsMoon } from "react-icons/bs";
 import { motion } from "framer-motion";
-
+import { BACKEND_URL } from "../utils";
 function Login() {
   const { setIsAuthenticated, setProfile } = useAuth();
   const navigateTo = useNavigate();
@@ -21,7 +21,7 @@ function Login() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:2000/api/users/login",
+        `${BACKEND_URL}/api/users/login`,
         { email, password, role },
         {
           withCredentials: true,
