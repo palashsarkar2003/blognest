@@ -12,9 +12,7 @@ import cors from "cors"
 const app = express();
 
 //dotenv config files
-dotenv.config({
-  path: ".env",
-});
+dotenv.config();
 
 //Middleware
 app.use(express.json());
