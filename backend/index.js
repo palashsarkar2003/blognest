@@ -19,11 +19,16 @@ dotenv.config({
 //Cors
 app.use(
   cors({
-    origin: 'https://blognest-omega.vercel.app',
+    origin:process.env.MONGODB_URL|| 'https://blognest-omega.vercel.app',
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]
   })
 );
+
+app.options('*', cors({
+  origin: 'https://blognest-omega.vercel.app',
+  credentials: true
+}));
 
 //Middleware
 app.use(express.json());
@@ -60,6 +65,6 @@ cloudinary.config({
   api_secret: process.env.CLOUD_SECRET_KEY,
 });
 
-app.listen(port, () => {
+app.listen(port||2000, () => {
   console.log(`Server is running at port ${port}`);
 });
