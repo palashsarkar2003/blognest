@@ -29,23 +29,24 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("password", password);
-    formData.append("role", role);
-    formData.append("education", education);
-    formData.append("photo", photo);
+     registerData = {name,email,phone,password,role,photo,education}
+    // const formData = new FormData();
+    // formData.append("name", name);
+    // formData.append("email", email);
+    // formData.append("phone", phone);
+    // formData.append("password", password);
+    // formData.append("role", role);
+    // formData.append("education", education);
+    // formData.append("photo", photo);
     console.log("BACKEND_URL:", BACKEND_URL);
     try {
       const { data } = await axios.post(
         `${BACKEND_URL}/api/users/register`,
-        formData,
+        registerData,
         {
           withCredentials: true,
           headers: {
-            "Content-Type": 'multipart/form-data',
+            "Content-Type": "application/json",
           },
         }
       );
