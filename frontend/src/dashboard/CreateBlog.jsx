@@ -111,9 +111,9 @@ function CreateBlog() {
 
       await axios.post(`${BACKEND_URL}/api/blogs/create`, formData, {
         withCredentials: true,
-        // headers: {
-        //   "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-        // },
+        headers: {
+          "Content-Type": 'multipart/form-data',
+        },
       });
 
       toast.success("Blog created successfully!");

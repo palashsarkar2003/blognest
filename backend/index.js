@@ -28,10 +28,10 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://blognest-omega.vercel.app');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://blognest-omega.vercel.app');
+//   next();
+// });
 
    
 
