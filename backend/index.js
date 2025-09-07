@@ -35,6 +35,8 @@ try {
   console.log(error);
 }
 
+console.log('CORS origin:', process.env.FRONTEND_URL);
+
 //Cors
 app.use(
   cors({
@@ -43,6 +45,9 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"]
   })
 );
+
+app.options('*', cors());
+
 
 //definig routes
 app.use("/api/users", userRoute);
@@ -55,6 +60,6 @@ cloudinary.config({
   api_secret: process.env.CLOUD_SECRET_KEY,
 });
 
-app.listen(port, () => {
+app.listen(port||, () => {
   console.log(`Server is running at port ${port}`);
 });
