@@ -79,14 +79,10 @@ import createTokenAndSaveCookies from "../jwt/AuthToken.js";
 
 export const register = async (req, res) => {
   try {
-    const { email, name, password, phone, education, role, images } = req.body;
+    const { email, name, password, phone, education, role, photo } = req.body;
 
-    if (!email || !name || !password || !phone || !education || !role || !images) {
+    if (!email || !name || !password || !phone || !education || !role || !photo) {
       return res.status(400).json({ message: "Please fill required fields" });
-    }
-
-    if (!Array.isArray(images) || images.length === 0) {
-      return res.status(400).json({ message: "At least one image is required" });
     }
 
     const userExists = await User.findOne({ email });
@@ -94,18 +90,10 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: "User already exists with this email" });
     }
 
-    // Upload all images to Cloudinary
-    const uploadedImages = await Promise.all(
-      images.map(async (base64Image) => {
-        const result = await cloudinary.uploader.upload(base64Image, {
-          folder: "user_uploads",
-        });
-        return {
-          public_id: result.public_id,
-          url: result.secure_url,
-        };
-      })
-    );
+    // Upload single profile photo to Cloudinary
+    const uploadedPhoto = await cloudinary.uploader.upload(photo, {
+      folder: "user_uploads",
+    });
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -118,7 +106,10 @@ export const register = async (req, res) => {
       phone,
       education,
       role,
-      photos: uploadedImages, // store array of image info
+      photo: {
+        public_id: uploadedPhoto.public_id,
+        url: uploadedPhoto.url,
+      },
     });
 
     await newUser.save();
@@ -134,7 +125,7 @@ export const register = async (req, res) => {
         email: newUser.email,
         role: newUser.role,
         education: newUser.education,
-        photos: newUser.photos,
+        photo: newUser.photo,
       },
       token,
     });
