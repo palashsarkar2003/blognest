@@ -14,6 +14,18 @@ const app = express();
 //dotenv config files
 dotenv.config();
 
+//Cors
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
+  })
+);
+
+app.options('*', cors());
+
+
 //Middleware
 app.use(express.json());
 app.use(
@@ -36,17 +48,6 @@ try {
 }
 
 console.log('CORS origin:', process.env.FRONTEND_URL);
-
-//Cors
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"]
-  })
-);
-
-app.options('*', cors());
 
 
 //definig routes
