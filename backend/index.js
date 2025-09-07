@@ -12,7 +12,9 @@ import cors from "cors"
 const app = express();
 
 //dotenv config files
-dotenv.config();
+dotenv.config({
+  path: ".env",
+});
 
 //Cors
 app.use(
