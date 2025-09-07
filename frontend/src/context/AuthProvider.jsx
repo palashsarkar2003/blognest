@@ -17,7 +17,10 @@ export const AuthProvider = ({ children }) => {
         if (token) {
           const { data } = await axios.get(
             `${BACKEND_URL}/api/users/my-profile`,
-            { withCredentials: true }
+            { headers: {
+      Authorization: `Bearer ${token}`,
+    },
+              withCredentials: true }
           );
           setProfile(data.user);
           setIsAuthenticated(true);
