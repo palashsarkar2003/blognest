@@ -21,14 +21,11 @@ app.use(
   cors({
     origin:process.env.MONGODB_URL|| 'https://blognest-omega.vercel.app',
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"]
+    methods: ["get", "post", "put", "delete"]
   })
 );
 
-app.options('*', cors({
-  origin: 'https://blognest-omega.vercel.app',
-  credentials: true
-}));
+
 
 //Middleware
 app.use(express.json());
