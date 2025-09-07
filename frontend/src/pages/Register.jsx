@@ -36,7 +36,7 @@ function Register() {
     formData.append("password", password);
     formData.append("role", role);
     formData.append("education", education);
-    formData.append("photo", photo);
+    // formData.append("photo", photo);
     console.log("BACKEND_URL:", BACKEND_URL);
     try {
       const { data } = await axios.post(
