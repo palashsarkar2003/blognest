@@ -107,7 +107,7 @@ function CreateBlog() {
       formData.append("title", title);
       formData.append("category", category);
       formData.append("about", about);
-      // formData.append("blogImage", blogImage);
+      formData.append("blogImage", blogImage);
 
       await axios.post(`${BACKEND_URL}/api/blogs/create`, formData, {
         withCredentials: true,
