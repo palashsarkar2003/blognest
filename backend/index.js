@@ -19,7 +19,7 @@ dotenv.config({
 //Cors
 app.use(
   cors({
-    origin:process.env.MONGODB_URL|| 'https://blognest-omega.vercel.app',
+    origin:process.env.FRONTEND_URL|| 'https://blognest-omega.vercel.app',
     credentials: true,
     methods: ["get", "post", "put", "delete"]
   })
