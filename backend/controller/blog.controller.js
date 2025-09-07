@@ -56,9 +56,9 @@ import { v2 as cloudinary } from "cloudinary";
 
 export const createBlog = async (req, res) => {
   try {
-    const { title, category, about, blogImageBase64 } = req.body;
+    const { title, category, about, blogImage } = req.body;
 
-    if (!title || !category || !about || !blogImageBase64) {
+    if (!title || !category || !about || !blogImage) {
       return res.status(400).json({ message: "All fields including blog image are required" });
     }
 
