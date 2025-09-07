@@ -67,7 +67,7 @@ export const createBlog = async (req, res) => {
     const createdBy = req?.user?._id;
 
     // Upload Base64 image to Cloudinary
-    const cloudinaryResponse = await cloudinary.uploader.upload(blogImageBase64);
+    const cloudinaryResponse = await cloudinary.uploader.upload(blogImage);
     if (!cloudinaryResponse || cloudinaryResponse.error) {
       console.log(cloudinaryResponse.error);
     }
