@@ -42,7 +42,7 @@ function Register() {
       const { data } = await axios.post(
         `${BACKEND_URL}/api/users/register`,
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        { withCredentials: true, }
       );
       toast.success(
         `Dear ${data.user.name}!! You have registered successfully`
