@@ -18,14 +18,12 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL || "https://blognest-omega.vercel.app",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Origin", "Content-Type", "X-Auth-Token"],
-    optionsSuccessStatus: 200, // for legacy browsers
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
 //Middleware
-app.use(express.json({ limit: "10mb" })); // <-- Important: Increase limit for Base64 image
+app.use(express.json({ limit: "10mb" })); 
 app.use(cookieParser());
 
 // PORT
@@ -41,7 +39,7 @@ mongoose
 app.use("/api/users", userRoute);
 app.use("/api/blogs", blogRoute);
 
-// Cloudinary config (already fine)
+// Cloudinary config 
 import { v2 as cloudinary } from "cloudinary";
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
