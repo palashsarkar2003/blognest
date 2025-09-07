@@ -25,10 +25,22 @@ app.use(
   })
 );
 
-
-        header('Access-Control-Allow-Origin:https://blognest-omega.vercel.app');
-        header('Access-Control-Allow-Methods: POST,GET,PUT,DELETE,OPTIONS');
-        header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    process.env.FRONTEND_URL || "https://blognest-omega.vercel.app"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, Content-Type, X-Auth-Token"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
    
 
 
