@@ -37,52 +37,79 @@ function Register() {
     formData.append("role", role);
     formData.append("education", education);
     formData.append("photo", photo);
-    console.log("BACKEND_URL:",BACKEND_URL)
+    console.log("BACKEND_URL:", BACKEND_URL);
     try {
       const { data } = await axios.post(
         `${BACKEND_URL}/api/users/register`,
         formData,
-        { withCredentials: true, }
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+          },
+        }
       );
       toast.success(
         `Dear ${data.user.name}!! You have registered successfully`
       );
-      setName(""); setEmail(""); setPassword(""); setPhone(""); setEducation("");
-      setRole(""); setPhoto(""); setPhotoPreview("");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setPhone("");
+      setEducation("");
+      setRole("");
+      setPhoto("");
+      setPhotoPreview("");
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "Please fill all required details");
+      toast.error(
+        error.response?.data?.message || "Please fill all required details"
+      );
     }
   };
 
   return (
-    <div className={`${darkMode ? "bg-gray-900" : "bg-gray-100"} min-h-screen flex items-center justify-center px-4 py-8 transition-colors duration-500`}>
-      <div className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"} w-full max-w-md rounded-3xl p-8 shadow-xl`}>
-        
+    <div
+      className={`${
+        darkMode ? "bg-gray-900" : "bg-gray-100"
+      } min-h-screen flex items-center justify-center px-4 py-8 transition-colors duration-500`}
+    >
+      <div
+        className={`${
+          darkMode ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"
+        } w-full max-w-md rounded-3xl p-8 shadow-xl`}
+      >
         {/* Dark Mode Toggle */}
         <div className="flex justify-end mb-4">
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-700 transition duration-300"
           >
-            {darkMode ? <FaSun className="text-yellow-400"/> : <FaMoon className="text-gray-800"/>}
+            {darkMode ? (
+              <FaSun className="text-yellow-400" />
+            ) : (
+              <FaMoon className="text-gray-800" />
+            )}
           </button>
         </div>
 
         <div className="text-center mb-4">
           <div className="font-bold text-3xl flex items-center justify-center mb-1">
-            <span className="text-blue-500 mr-2 animate-bounce"><FaFeatherAlt/></span>
+            <span className="text-blue-500 mr-2 animate-bounce">
+              <FaFeatherAlt />
+            </span>
             Blog<span className="text-blue-500 ml-1">Nest</span>
           </div>
           <h1 className="text-xl font-semibold">Register</h1>
         </div>
 
         <form onSubmit={handleRegister} className="space-y-3">
-
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+            className={`${
+              darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"
+            } w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
           >
             <option value="">Select Role</option>
             <option value="user">User</option>
@@ -94,7 +121,11 @@ function Register() {
             placeholder="Your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`${darkMode ? "bg-gray-700 text-gray-100 placeholder-gray-300" : "bg-white text-gray-900 placeholder-gray-400"} w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+            className={`${
+              darkMode
+                ? "bg-gray-700 text-gray-100 placeholder-gray-300"
+                : "bg-white text-gray-900 placeholder-gray-400"
+            } w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
           />
 
           <input
@@ -102,7 +133,11 @@ function Register() {
             placeholder="Enter Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`${darkMode ? "bg-gray-700 text-gray-100 placeholder-gray-300" : "bg-white text-gray-900 placeholder-gray-400"} w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+            className={`${
+              darkMode
+                ? "bg-gray-700 text-gray-100 placeholder-gray-300"
+                : "bg-white text-gray-900 placeholder-gray-400"
+            } w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
           />
 
           <input
@@ -110,7 +145,11 @@ function Register() {
             placeholder="Enter Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className={`${darkMode ? "bg-gray-700 text-gray-100 placeholder-gray-300" : "bg-white text-gray-900 placeholder-gray-400"} w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+            className={`${
+              darkMode
+                ? "bg-gray-700 text-gray-100 placeholder-gray-300"
+                : "bg-white text-gray-900 placeholder-gray-400"
+            } w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
           />
 
           <input
@@ -118,13 +157,19 @@ function Register() {
             placeholder="Enter Your Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={`${darkMode ? "bg-gray-700 text-gray-100 placeholder-gray-300" : "bg-white text-gray-900 placeholder-gray-400"} w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+            className={`${
+              darkMode
+                ? "bg-gray-700 text-gray-100 placeholder-gray-300"
+                : "bg-white text-gray-900 placeholder-gray-400"
+            } w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
           />
 
           <select
             value={education}
             onChange={(e) => setEducation(e.target.value)}
-            className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
+            className={`${
+              darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"
+            } w-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300`}
           >
             <option value="">Select Your Education</option>
             <option value="BCA">BCA</option>
@@ -153,7 +198,11 @@ function Register() {
             <input
               type="file"
               onChange={changePhotoHandler}
-              className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} flex-1 p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 text-sm`}
+              className={`${
+                darkMode
+                  ? "bg-gray-700 text-gray-100"
+                  : "bg-white text-gray-900"
+              } flex-1 p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 text-sm`}
             />
           </div>
 
