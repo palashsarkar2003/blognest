@@ -21,7 +21,7 @@ app.use(
   cors({
     origin:process.env.FRONTEND_URL|| 'https://blognest-omega.vercel.app',
     credentials: true,
-    methods: ["get", "post", "put", "delete"]
+    methods: ["GET", "POST", "PUT", "DELETE"]
   })
 );
 
@@ -62,6 +62,6 @@ cloudinary.config({
   api_secret: process.env.CLOUD_SECRET_KEY,
 });
 
-app.listen(port, () => {
+app.listen(port||2000, () => {
   console.log(`Server is running at port ${port}`);
 });
