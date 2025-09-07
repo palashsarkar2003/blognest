@@ -27,9 +27,9 @@ app.use(
 
 app.use((req, res, next) => {
     res.set({
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin":'https://blognest-omega.vercel.app',
         "Access-Control-Allow-Methods": "*",
-        "Access-Control-Allow-Headers": "'Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'",
+        "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
     });
 
     next();
@@ -39,13 +39,14 @@ app.use((req, res, next) => {
 
 //Middleware
 app.use(express.json());
+app.use(cookieParser())
 app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "/temp/",
   })
 );
-app.use(cookieParser())
+
 
 // PORT 
 const port = process.env.PORT;
@@ -70,6 +71,10 @@ cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_SECRET_KEY,
+});
+
+app.get("/test-cors", (req, res) => {
+  res.json({ msg: "CORS is working!" });
 });
 
 app.listen(port||2000, () => {
