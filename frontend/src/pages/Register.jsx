@@ -29,7 +29,7 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-     registerData = {name,email,phone,password,role,photo,education}
+     const registerData = {name,email,phone,password,role,photo,education}
     // const formData = new FormData();
     // formData.append("name", name);
     // formData.append("email", email);
