@@ -44,9 +44,9 @@ function Register() {
         formData,
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-          },
+          // headers: {
+          //   "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+          // },
         }
       );
       toast.success(

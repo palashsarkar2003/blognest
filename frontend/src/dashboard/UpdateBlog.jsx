@@ -68,9 +68,9 @@ function UpdateBlog() {
         formData,
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          // headers: {
+          //   "Content-Type": "multipart/form-data",
+          // },
         }
       );
 

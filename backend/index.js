@@ -19,28 +19,15 @@ dotenv.config({
 //Cors
 app.use(
   cors({
-    origin:process.env.FRONTEND_URL|| 'https://blognest-omega.vercel.app',
+    origin: process.env.FRONTEND_URL || "https://blognest-omega.vercel.app",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE","OPTIONS"]
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Origin", "Content-Type", "X-Auth-Token"],
+    preflightContinue: false, // let CORS respond automatically
+    optionsSuccessStatus: 200 // for legacy browsers
   })
 );
 
-app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    process.env.FRONTEND_URL || "https://blognest-omega.vercel.app"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, Content-Type, X-Auth-Token"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
-});
    
 
 
