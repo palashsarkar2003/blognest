@@ -11,20 +11,18 @@ function UpdateBlog() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [about, setAbout] = useState("");
-
-  
-  const [blogImage, setBlogImage] = useState(null); 
+  const [blogImage, setBlogImage] = useState(""); 
   const [blogImagePreview, setBlogImagePreview] = useState(""); 
 
   // Handle new image selection
   const changePhotoHandler = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setBlogImage(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        setBlogImagePreview(reader.result); 
+        setBlogImage(reader.result);       // store base64
+        setBlogImagePreview(reader.result); // show preview
       };
     }
   };
@@ -50,33 +48,31 @@ function UpdateBlog() {
     fetchBlog();
   }, [id]);
 
-  // Handle update
+  // Handle update (send JSON, not FormData)
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("category", category);
-    formData.append("about", about);
 
-    if (blogImage) {
-      formData.append("blogImage", blogImage);
-    }
+    const payload = {
+      title,
+      category,
+      about,
+      blogImage, // base64 string
+    };
 
     try {
       const { data } = await axios.put(
         `${BACKEND_URL}/api/blogs/update/${id}`,
-        formData,
+        payload,
         {
           withCredentials: true,
-          // headers: {
-          //   "Content-Type": "multipart/form-data",
-          // },
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 
       toast.success(data.message || "Blog updated successfully");
 
-      // Update preview after successful update
       if (data?.blog?.blogImage?.url) {
         setBlogImagePreview(data.blog.blogImage.url);
       }
@@ -89,6 +85,7 @@ function UpdateBlog() {
       );
     }
   };
+
   const categories = [
     "Personal",
     "Business",
@@ -159,7 +156,6 @@ function UpdateBlog() {
     "Startup & Entrepreneurship",
   ];
 
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-8">
@@ -180,10 +176,10 @@ function UpdateBlog() {
             >
               <option value="">Select Category</option>
               {categories.map((cat, idx) => (
-              <option key={idx} value={cat}>
-                {cat}
-              </option>
-            ))}
+                <option key={idx} value={cat}>
+                  {cat}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -206,10 +202,11 @@ function UpdateBlog() {
             <img
               src={blogImagePreview || "/imgPL.webp"}
               alt="Blog Preview"
-              className="mx-auto w-1/3   object-cover rounded-lg shadow mb-4 border"
+              className="mx-auto w-1/3 object-cover rounded-lg shadow mb-4 border"
             />
             <input
               type="file"
+              accept="image/*"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               onChange={changePhotoHandler}
             />
@@ -240,4 +237,3 @@ function UpdateBlog() {
 }
 
 export default UpdateBlog;
-
