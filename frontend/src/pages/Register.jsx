@@ -408,8 +408,8 @@ function Register() {
           </select>
 
           {/* Photo Upload */}
-          <div className="flex items-center space-x-3">
-            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-400">
+          <div className="flex flex-col sm:flex-row items-center sm:space-x-3 space-y-3 sm:space-y-0">
+            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-400 flex-shrink-0">
               {photoPreview ? (
                 <img
                   src={photoPreview}
@@ -430,7 +430,7 @@ function Register() {
                 darkMode
                   ? "bg-gray-700 text-gray-100"
                   : "bg-white text-gray-900"
-              } flex-1 p-2 border rounded-xl text-sm`}
+              } flex-1 max-w-full p-2 border rounded-xl text-sm`}
             />
           </div>
 
