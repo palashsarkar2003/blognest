@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaCheckCircle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { BACKEND_URL } from "../utils";
 
 function Contact() {
   const [success, setSuccess] = useState(false); // modal state
@@ -65,7 +64,7 @@ function Contact() {
           
           {/* Form Section */}
           <div className="w-full md:w-1/2 p-8 md:p-12 bg-gray-50">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-6">Contact Us</h2>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-6">Contact Me</h2>
             <p className="text-gray-600 mb-6">
               Have a question or want to work together? Send me a message and I'll get back to you.
             </p>
