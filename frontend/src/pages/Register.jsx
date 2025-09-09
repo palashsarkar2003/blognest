@@ -248,16 +248,17 @@ function Register() {
   const [photo, setPhoto] = useState(""); // Base64 string
   const [photoPreview, setPhotoPreview] = useState("");
   const [darkMode, setDarkMode] = useState(false);
+  const [loading, setLoading] = useState(false); // Spinner state
 
   // Handle profile photo selection
   const changePhotoHandler = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.readAsDataURL(file); // convert to Base64
+    reader.readAsDataURL(file);
     reader.onload = () => {
-      setPhoto(reader.result); // Base64 string to send
-      setPhotoPreview(reader.result); // Preview for UI
+      setPhoto(reader.result);
+      setPhotoPreview(reader.result);
     };
   };
 
@@ -272,14 +273,19 @@ function Register() {
       password,
       role,
       education,
-      photo, // Base64 string
+      photo,
     };
 
     try {
-      const { data } = await axios.post(`${BACKEND_URL}/api/users/register`, registerData, {
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-      });
+      setLoading(true); // start spinner
+      const { data } = await axios.post(
+        `${BACKEND_URL}/api/users/register`,
+        registerData,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       toast.success(`Dear ${data.user.name}, registered successfully!`);
 
@@ -295,42 +301,103 @@ function Register() {
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false); // stop spinner
     }
   };
 
   return (
-    <div className={`${darkMode ? "bg-gray-900" : "bg-gray-100"} min-h-screen flex items-center justify-center px-4 py-8`}>
-      <div className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"} w-full max-w-md rounded-3xl p-8 shadow-xl`}>
-        
+    <div
+      className={`${
+        darkMode ? "bg-gray-900" : "bg-gray-100"
+      } min-h-screen flex items-center justify-center px-4 py-8`}
+    >
+      <div
+        className={`${
+          darkMode ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"
+        } w-full max-w-md rounded-3xl p-8 shadow-xl`}
+      >
         {/* Dark Mode Toggle */}
         <div className="flex justify-end mb-4">
-          <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-700">
-            {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon className="text-gray-800" />}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-700"
+          >
+            {darkMode ? (
+              <FaSun className="text-yellow-400" />
+            ) : (
+              <FaMoon className="text-gray-800" />
+            )}
           </button>
         </div>
 
         <div className="text-center mb-4">
           <div className="font-bold text-3xl flex items-center justify-center mb-1">
-            <span className="text-blue-500 mr-2 animate-bounce"><FaFeatherAlt /></span>
-            Blog<span className="text-blue-500 ml-1">Nest</span>
+            <span className="text-blue-500 mr-2 animate-bounce">
+              <FaFeatherAlt />
+            </span>
+            Blog<span className="text-blue-500">Nest</span>
           </div>
           <h1 className="text-xl font-semibold">Register</h1>
         </div>
 
         <form onSubmit={handleRegister} className="space-y-3">
-
-          <select value={role} onChange={(e) => setRole(e.target.value)} className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} w-full p-2 border rounded-xl`}>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className={`${
+              darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"
+            } w-full p-2 border rounded-xl`}
+          >
             <option value="">Select Role</option>
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </select>
 
-          <input type="text" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} w-full p-2 border rounded-xl`} />
-          <input type="email" placeholder="Your Email" value={email} onChange={(e) => setEmail(e.target.value)} className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} w-full p-2 border rounded-xl`} />
-          <input type="number" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} w-full p-2 border rounded-xl`} />
-          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} w-full p-2 border rounded-xl`} />
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={`${
+              darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"
+            } w-full p-2 border rounded-xl`}
+          />
+          <input
+            type="email"
+            placeholder="Your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={`${
+              darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"
+            } w-full p-2 border rounded-xl`}
+          />
+          <input
+            type="number"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className={`${
+              darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"
+            } w-full p-2 border rounded-xl`}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={`${
+              darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"
+            } w-full p-2 border rounded-xl`}
+          />
 
-          <select value={education} onChange={(e) => setEducation(e.target.value)} className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} w-full p-2 border rounded-xl`}>
+          <select
+            value={education}
+            onChange={(e) => setEducation(e.target.value)}
+            className={`${
+              darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"
+            } w-full p-2 border rounded-xl`}
+          >
             <option value="">Select Your Education</option>
             <option value="BCA">BCA</option>
             <option value="MCA">MCA</option>
@@ -344,23 +411,73 @@ function Register() {
           <div className="flex items-center space-x-3">
             <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-400">
               {photoPreview ? (
-                <img src={photoPreview} alt="Profile" className="w-full h-full object-cover" />
+                <img
+                  src={photoPreview}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-gray-400 font-semibold text-sm">Photo</div>
+                <div className="w-full h-full flex items-center justify-center text-gray-400 font-semibold text-sm">
+                  Photo
+                </div>
               )}
             </div>
-            <input type="file" accept="image/*" onChange={changePhotoHandler} className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-gray-900"} flex-1 p-2 border rounded-xl text-sm`} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={changePhotoHandler}
+              className={`${
+                darkMode
+                  ? "bg-gray-700 text-gray-100"
+                  : "bg-white text-gray-900"
+              } flex-1 p-2 border rounded-xl text-sm`}
+            />
           </div>
 
           <p className="text-center text-sm">
             Already registered?{" "}
-            <Link to="/login" className="text-blue-500 font-semibold hover:underline">Login Now</Link>
+            <Link
+              to="/login"
+              className="text-blue-500 font-semibold hover:underline"
+            >
+              Login Now
+            </Link>
           </p>
 
-          <button type="submit" className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-xl">
-            Register
+          {/* Submit Button with Spinner */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-xl flex items-center justify-center"
+          >
+            {loading ? (
+              <div className="flex items-center">
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                Registering...
+              </div>
+            ) : (
+              "Register"
+            )}
           </button>
-
         </form>
       </div>
     </div>
